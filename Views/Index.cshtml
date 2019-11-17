@@ -1,0 +1,65 @@
+﻿@model Portfolio.Models.SalaryViewModels
+
+@{
+    ViewBag.Title = "Salarycalculator";
+}
+
+<div class="card text-white" style="background-color: #222222 !important; height: 100%">
+    <div class="card-body">
+        <h1>Salary Calculator</h1>
+        <hr style="border-top: 1px solid white" />
+        <b>How does it works?</b>
+        <p>I build this tool to calculate my monthly salary. This tool uses the Google Calendar API to calculate the total hours of the given event name between the 2 given dates and multiplies it by the given salary per hour.</p>
+        Step 1: Login to google (should already be prompted)<br />
+        Step 2: Enter the event name (only works with self created events and events are case sensitive)<br />
+        Step 3: Enter the starting date (Should be the last date when you got your salary)<br />
+        Step 4: Enter the ending date (Should be the next date when you get your salary)<br />
+        Step 5: Enter the salary you get per hour.<br />
+        Step 6: Press on calculate. <br />    
+
+        <br />
+        <div class="row">
+            <div class=" col">
+                @using (Html.BeginForm("Index", "SalaryCalculator", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    <span class="control-label">Event Name</span><br />
+                    @Html.TextBoxFor(m => m.Eventname, new { @class = "form-control" })
+                    @Html.ValidationMessage("Eventname", "", new { @class = "text-danger" })<br />
+
+                    <span class="control-label">Start Date</span><br />
+                    @Html.TextBoxFor(m => m.Startdate, new { @class = "form-control", Type = "date" })
+                    @Html.ValidationMessage("Startdate", "", new { @class = "text-danger" })<br />
+
+                    <span class="control-label">End Date</span><br />
+                    @Html.TextBoxFor(m => m.Enddate, new { @class = "form-control", Type = "date" })
+                    @Html.ValidationMessage("Enddate", "", new { @class = "text-danger" })<br />
+
+
+                    <span class="control-label">Salary per hour</span><br />
+                    <input type="number" step="any" class="form-control" id="Salary" name="Salary">
+                    @Html.ValidationMessage("Salary", "", new { @class = "text-danger" })<br />
+
+
+                    <input type="submit" class="btn btn-primary" value="Calculate" />
+                }
+            </div>
+            <div class="col">
+                @{
+                    if (Model != null)
+                    {
+                        <h2>Results</h2>
+                        <b>Total hours:</b> @Model.Totalhours <br />
+                        <b>Total salary:</b> @String.Format("€{0}", Model.TotalSalary) 
+                    }
+                }
+            </div>
+        </div>
+
+
+
+
+
+
+    </div>
+</div>
+
